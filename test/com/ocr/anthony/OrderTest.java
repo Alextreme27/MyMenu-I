@@ -33,7 +33,7 @@ public class OrderTest {
     }
     @Test
     public void Given_Vegetarian_When_AskForMenuSelected_Then_ShouldDisplayCorrectSentence() {
-        order.displaySelectedMenu(3);
-        assertEquals("Vous avez choisi le menu 3\n", outContent.toString().replace("\r\n", "\n"));
+        order.displaySelectedMenu(2);
+        assertEquals("Vous avez choisi le menu 2\n", outContent.toString().replace("\r\n", "\n"));
     }
 }
