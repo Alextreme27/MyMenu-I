@@ -3,6 +3,8 @@ package com.ocr.anthony;
 import java.util.Scanner;
 
 public class Order {
+
+    Scanner sc = new Scanner(System.in);
     /**
      * Display all available menus in the restaurant.
      */
@@ -38,64 +40,47 @@ public class Order {
      */
     public void runMenu() {
         this.displayAvailableMenu();
-        Scanner sc = new Scanner(System.in);
-        int nbMenu = sc.nextInt();
-        this.displaySelectedMenu(nbMenu);
-        switch (nbMenu) {
-            case 1:
-                displayAvailableSide(true);
-                int nbSide = sc.nextInt();
-                displaySelectedSide(nbSide, true);
-                displayAvailableDrink();
-                int nbDrink = sc.nextInt();
-                displaySelectedDrink(nbDrink);
-                break;
-            case 2:
-                displayAvailableSide(true);
-                nbSide = sc.nextInt();
-                displaySelectedSide(nbSide, true);
-                break;
-            case 3:
-                displayAvailableSide(false);
-                nbSide = sc.nextInt();
-                displaySelectedSide(nbSide, false);
-                displayAvailableDrink();
-                nbDrink = sc.nextInt();
-                displaySelectedDrink(nbDrink);
-                break;
-        }
+        int nbMenu;
+        do {
+            nbMenu = sc.nextInt();
+            this.displaySelectedMenu(nbMenu);
+            switch (nbMenu) {
+                case 1:
+                    displayAvailableSide(true);
+                    int nbSide;
+                    do {
+                        nbSide = sc.nextInt();
+                        displaySelectedSide(nbSide, true);
+                    } while (nbSide < 1 || nbSide > 3);
+                    displayAvailableDrink();
+                    int nbDrink;
+                    do {
+                        nbDrink = sc.nextInt();
+                        displaySelectedDrink(nbDrink);
+                    } while (nbDrink < 1 || nbDrink > 3);
+                    break;
+                case 2:
+                    displayAvailableSide(true);
+                    do {
+                        nbSide = sc.nextInt();
+                        displaySelectedSide(nbSide, true);
+                    } while (nbSide < 1 || nbSide > 3);
+                    break;
+                case 3:
+                    displayAvailableSide(false);
+                    do {
+                        nbSide = sc.nextInt();
+                        displaySelectedSide(nbSide, false);
+                    } while (nbSide < 1 || nbSide > 2);
+                    displayAvailableDrink();
+                    do {
+                        nbDrink = sc.nextInt();
+                        displaySelectedDrink(nbDrink);
+                    } while (nbDrink < 1 || nbDrink > 3);
+                    break;
+            }
+        } while (nbMenu < 1 || nbMenu > 3);
     }
-
-    /**
-     * Display all available sides depending on all sides enable or not.
-     * All sides = vegetables, frites and rice
-     * No all sides = rice or not
-     * @param allSideEnable enable display for all side or not
-     */
-    public void displayAvailableSide(boolean allSideEnable) {
-        System.out.println("Choix accompagnement");
-        if (allSideEnable) {
-            System.out.println("1 - légumes frais");
-            System.out.println("2 - frites");
-            System.out.println("3 - riz");
-        } else {
-            System.out.println("1 - riz");
-            System.out.println("2 - pas de riz");
-        }
-        System.out.println("Que souhaitez-vous comme accompagnement ?");
-    }
-
-    /**
-     * Display all available drinks in the restaurant
-     */
-    public void displayAvailableDrink() {
-        System.out.println("Choix boisson");
-        System.out.println("1 - eau plate");
-        System.out.println("2 - eau gazeuse");
-        System.out.println("3 - soda");
-        System.out.println("Que souhaitez-vous comme boisson ?");
-    }
-
     /**
      * Display a selected side depending on all sides enable or not.
      * All sides = vegetables, frites and rice
@@ -133,15 +118,12 @@ public class Order {
             }
         }
     }
-
-
-
     /**
-     *
-     * @param nbDrink The selected drink
+     * Display a selected drink.
+     * @param nbDrink The selected drink.
      */
     public void displaySelectedDrink(int nbDrink) {
-        switch(nbDrink){
+        switch (nbDrink) {
             case 1:
                 System.out.println("Vous avez choisi comme boisson : eau plate");
                 break;
@@ -155,6 +137,42 @@ public class Order {
                 System.out.println("Vous n'avez pas choisi de boisson parmi les choix proposés");
                 break;
         }
+    }
+    /**
+     * Display all available sides depending on all sides enable or not.
+     * All sides = vegetables, frites and rice
+     * No all sides = rice or not
+     * @param allSideEnable enable display for all side or not
+     */
+    public void displayAvailableSide(boolean allSideEnable) {
+        System.out.println("Choix accompagnement");
+        if (allSideEnable) {
+            System.out.println("1 - légumes frais");
+            System.out.println("2 - frites");
+            System.out.println("3 - riz");
+        } else {
+            System.out.println("1 - riz");
+            System.out.println("2 - pas de riz");
         }
+        System.out.println("Que souhaitez-vous comme accompagnement ?");
     }
 
+    /**
+     * Display all available drinks in the restaurant
+     */
+    public void displayAvailableDrink() {
+        System.out.println("Choix boisson");
+        System.out.println("1 - eau plate");
+        System.out.println("2 - eau gazeuse");
+        System.out.println("3 - soda");
+        System.out.println("Que souhaitez-vous comme boisson ?");
+    }
+
+    public void runMenus() {
+        System.out.println("Combien souhaitez-vous de menus?");
+        int menuQuantity = sc.nextInt();
+        for(int i=0; i<menuQuantity; i++){
+            runMenu();
+        }
+    }
+}
